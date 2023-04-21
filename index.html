@@ -29,15 +29,17 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">Nama Film</th>
-                    <th class="text-left">Score</th>
-                    <th class="text-left">Poster Film</th>
+                    <th class="text-left">Nama</th>
+                    <th class="text-left">Genre</th>
+                    <th class="text-left">Rating</th>
+                    <th class="text-left">Poster</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="film in data_film" :key="film.show.id">
                     <td>{{ film.show.name}}</td>
-                    <td>{{ film.score}}</td>
+                    <td>{{ film.show.genres[0]}}</td>
+                    <td>{{ film.show.rating.average}}</td>
                     <td>
                       <img :src="film.show.image.medium" />
                     </td>
@@ -51,7 +53,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script>
       new Vue({
