@@ -24,29 +24,93 @@
       <v-app>
         <v-main>
           <v-container>
-            <h1 class="mt-5 text-center">Daftar Film</h1>
-            <v-simple-table>
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-left">Nama</th>
-                    <th class="text-left">Genre</th>
-                    <th class="text-left">Rating</th>
-                    <th class="text-left">Poster</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="film in data_film" :key="film.show.id">
-                    <td>{{ film.show.name}}</td>
-                    <td>{{ film.show.genres[0]}}</td>
-                    <td>{{ film.show.rating.average}}</td>
-                    <td>
-                      <img :src="film.show.image.medium" />
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
+            <template>
+              <div>
+                <v-alert border="top" color="blue"> Daftar Film </v-alert>
+              </div>
+            </template>
+            <!-- <v-card elevation="10">
+              <v-simple-table dark>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Nama</th>
+                      <th class="text-left">Genre</th>
+                      <th class="text-left">Rating</th>
+                      <th class="text-left">Poster</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="film in data_film" :key="film.show.id">
+                      <td>{{ film.show.name}}</td>
+                      <td>{{ film.show.genres[0]}}</td>
+                      <td>{{ film.show.rating.average}}</td>
+                      <td>
+                        <img :src="film.show.image.medium" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </template> </v-simple-table
+            ></v-card> -->
+            <!-- card  -->
+            <template>
+              <div v-for="film in data_film" :key="film.show.id">
+                <v-card
+                  :loading="loading"
+                  class="mx-auto my-12"
+                  max-width="374"
+                >
+                  <template slot="progress">
+                    <v-progress-linear
+                      color="deep-purple"
+                      height="10"
+                      indeterminate
+                    ></v-progress-linear>
+                  </template>
+
+                  <v-img :src="film.show.image.medium"></v-img>
+
+                  <v-card-title>{{ film.show.name}}</v-card-title>
+
+                  <v-card-text>
+                    <v-row align="center" class="mx-0">
+                      <div>Rating:</div>
+
+                      <div class="grey--text ms-4">
+                        {{ film.show.rating.average }}
+                      </div>
+                    </v-row>
+
+                    <div class="my-4 text-subtitle-1">
+                      Genre: {{ film.show.genres[0] }}
+                    </div>
+
+                    <div>{{film.show.summary}}</div>
+                  </v-card-text>
+
+                  <v-divider class="mx-4"></v-divider>
+
+                  <v-card-title>Premiered on</v-card-title>
+
+                  <v-card-text>
+                    <v-chip-group
+                      v-model="selection"
+                      active-class="deep-purple accent-4 white--text"
+                      column
+                    >
+                      <v-chip>{{ film.show.premiered }}</v-chip>
+                    </v-chip-group>
+                  </v-card-text>
+                </v-card>
+              </div>
+            </template>
+            <template>
+              <div>
+                <v-alert border="top" color="blue" class="text-center">
+                  2023 - Agus Pranyoto
+                </v-alert>
+              </div>
+            </template>
           </v-container>
         </v-main>
       </v-app>
@@ -76,6 +140,29 @@
           },
         },
       });
+    </script>
+    <script>
+      export default {
+        data: () => ({
+          icons: ["mdi-home", "mdi-email", "mdi-calendar", "mdi-delete"],
+          items: ["default", "absolute", "fixed"],
+          padless: false,
+          variant: "default",
+        }),
+        computed: {
+          localAttrs() {
+            const attrs = {};
+
+            if (this.variant === "default") {
+              attrs.absolute = false;
+              attrs.fixed = false;
+            } else {
+              attrs[this.variant] = true;
+            }
+            return attrs;
+          },
+        },
+      };
     </script>
   </body>
 </html>
